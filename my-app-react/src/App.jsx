@@ -41,11 +41,19 @@ class App extends Component {
   // this.state.good === 0 && this.state.neutral === 0 && this.state.bad === 0;
   render() {
     const { good, neutral, bad } = this.state;
+    const statistics= {
+      Good: good,
+      Neutral: neutral,
+      Bad: bad,
+      Total: this.countTotalFeedback(),
+      "Positive percentage": this.countPositiveFeedbackPercentage(),
+    };
     return (
+      
       <>
         <Section title="Please leave feedback">
           <FeedbackOptions
-            options={["good", "neutral", "bad"]}
+            options={Object.keys(this.state)}
             onLeaveFeedback={this.handleIncrease}
           />
         </Section>
@@ -55,11 +63,9 @@ class App extends Component {
             <Notification message="There is no feedback" />
           ) : (
             <Statistics
-              good={good}
-              neutral={neutral}
-              bad={bad}
-              total={this.countTotalFeedback()}
-              positivePercentage={this.countPositiveFeedbackPercentage()}
+              prop={statistics}
+              // total={this.countTotalFeedback()}
+              // positivePercentage={this.countPositiveFeedbackPercentage()}
             />
           )}
         </Section>
